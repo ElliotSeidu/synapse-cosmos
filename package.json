@@ -1,0 +1,14 @@
+{
+  "name": "synapse-cosmos",
+  "version": "1.0.0",
+  "description": "Hyperdimensional Artificial Biosphere, 4D Spacetime & Quantum Neural Organism Sandbox",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "ws": "^8.18.0"
+  }
+}

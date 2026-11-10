@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>SYNAPSE // COSMOS — Hyperdimensional Biosphere & Neural Sandbox</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="universe-active">
+  <!-- Multi-layered High-Performance Canvas Stack -->
+  <div id="canvas-container">
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="trails-canvas"></canvas>
+    <canvas id="manifold-canvas"></canvas>
+    <canvas id="sim-canvas"></canvas>
+    <canvas id="fx-canvas"></canvas>
+  </div>
+
+  <!-- Top Cybernetic Telemetry Header -->
+  <header class="hud-panel top-bar">
+    <div class="brand">
+      <div class="brand-glyph"></div>
+      <div class="brand-text">
+        <span class="title">SYNAPSE // COSMOS</span>
+        <span class="subtitle">HYPERDIMENSIONAL NEURAL BIOSPHERE</span>
+      </div>
+    </div>
+
+    <div class="telemetry-chips">
+      <div class="chip" id="fps-chip">
+        <span class="label">FPS</span>
+        <span class="val" id="fps-val">60</span>
+      </div>
+      <div class="chip" id="gen-chip">
+        <span class="label">MAX GEN</span>
+        <span class="val" id="gen-val">1</span>
+      </div>
+      <div class="chip" id="pop-chip">
+        <span class="label">ENTITIES</span>
+        <span class="val" id="pop-val">0</span>
+      </div>
+      <div class="chip" id="herb-chip">
+        <span class="label">HERBIVORES</span>
+        <span class="val herbivore-text" id="herb-val">0</span>
+      </div>
+      <div class="chip" id="carn-chip">
+        <span class="label">CARNIVORES</span>
+        <span class="val carnivore-text" id="carn-val">0</span>
+      </div>
+      <div class="chip" id="scav-chip">
+        <span class="label">SCAVENGERS</span>
+        <span class="val spore-text" id="scav-val">0</span>
+      </div>
+      <div class="chip" id="spore-chip">
+        <span class="label">SPORES</span>
+        <span class="val spore-text" id="spore-val">0</span>
+      </div>
+      <div class="chip" id="born-chip" title="Total Organisms Born Through Mitosis & Crossover">
+        <span class="label">BORN</span>
+        <span class="val" id="born-val" style="color: #00f0ff;">0</span>
+      </div>
+      <div class="chip" id="died-chip" title="Total Organisms Decayed or Predated">
+        <span class="label">DIED</span>
+        <span class="val" id="died-val" style="color: #ff3366;">0</span>
+      </div>
+      <div class="chip" id="apex-chip">
+        <button id="apex-track-btn" class="chip-btn" title="Auto-Lock onto Highest Fitness Apex Specimen (Key: F)">
+          <span class="icon">👑</span>
+          <span>APEX</span>
+        </button>
+      </div>
+      <div class="chip" id="audio-chip">
+        <button id="audio-toggle-btn" class="chip-btn" title="Toggle Generative Synesthetic Audio Engine">
+          <span class="icon">🔊</span>
+          <span id="audio-btn-text">AUDIO: ON</span>
+        </button>
+      </div>
+      <div class="chip" id="cam-chip">
+        <button id="cam-center-btn" class="chip-btn" title="Reset Camera Center & Zoom (Key: C)">
+          <span class="icon">🎯</span>
+          <span>CENTER</span>
+        </button>
+      </div>
+      <div class="chip" id="cinematic-chip">
+        <button id="cinematic-btn" class="chip-btn" title="Holographic Cinematic Screensaver (Key: H)">
+          <span class="icon">👁️</span>
+          <span>CINEMATIC</span>
+        </button>
+      </div>
+      <div class="chip" id="help-chip">
+        <button id="help-modal-btn" class="chip-btn" title="Keyboard Shortcuts Reference">
+          <span class="icon">⌨️</span>
+          <span>KEYS</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Left Floating God Toolbox -->
+  <aside class="hud-panel left-toolbox">
+    <div class="toolbox-header">
+      <span class="toolbox-title">GOD INTERVENTIONS</span>
+      <div class="pulse-indicator"></div>
+    </div>
+
+    <div class="tool-group">
+      <button class="tool-btn active" data-mode="inspect" title="Inspect & Track Neural Specimen (Key: 1)">
+        <span class="btn-icon">🔬</span>
+        <span class="btn-label">Inspect / Track</span>
+      </button>
+      <button class="tool-btn" data-mode="singularity" title="Spawn Gravitational Black Hole (Key: 2)">
+        <span class="btn-icon">🌀</span>
+        <span class="btn-label">Singularity Vortex</span>
+      </button>
+      <button class="tool-btn" data-mode="repulsor" title="Spawn Anti-Gravity White Hole (Key: 3)">
+        <span class="btn-icon">✨</span>
+        <span class="btn-label">White Hole Repulsor</span>
+      </button>
+      <button class="tool-btn" data-mode="spores" title="Scatter Quantum Spore Bloom (Key: 4)">
+        <span class="btn-icon">🌱</span>
+        <span class="btn-label">Spore Bloom</span>
+      </button>
+      <button class="tool-btn" data-mode="cosmicray" title="Fire Ionizing Cosmic Ray (Key: 5)">
+        <span class="btn-icon">⚡</span>
+        <span class="btn-label">Cosmic Mutagen Ray</span>
+      </button>
+      <button class="tool-btn" data-mode="supernova" title="Detonate Stellar Supernova Shockwave (Key: 6)">
+        <span class="btn-icon">💥</span>
+        <span class="btn-label">Supernova Detonation</span>
+      </button>
+      <button class="tool-btn" data-mode="stasis" title="Drop Quantum Stasis Bubble (Key: 7)">
+        <span class="btn-icon">❄️</span>
+        <span class="btn-label">Quantum Stasis Field</span>
+      </button>
+      <button class="tool-btn" data-mode="lightning" title="Fire Chain Mutagen Lightning (Key: 8)">
+        <span class="btn-icon">⚡</span>
+        <span class="btn-label">Chain Lightning</span>
+      </button>
+      <button class="tool-btn" data-mode="rift" title="Open 4D Spatial Wormhole Rift (Key: 9)">
+        <span class="btn-icon">🌌</span>
+        <span class="btn-label">4D Spatial Rift</span>
+      </button>
+      <button class="tool-btn" data-mode="pulsar" title="Deploy Orbital Dyson Pulsar Beacon (Key: 0)">
+        <span class="btn-icon">☀️</span>
+        <span class="btn-label">Orbital Dyson Pulsar</span>
+      </button>
+    </div>
+
+    <div class="toolbox-divider"></div>
+
+    <div class="preset-section">
+      <label class="section-label">COSMIC PRESETS</label>
+      <select id="preset-select" class="hud-select">
+        <option value="genesis">🌱 Genesis (Balanced Garden)</option>
+        <option value="predator_wars">⚔️ Evolutionary Arms Race</option>
+        <option value="tesseract_singularity">🌀 4D Tesseract Nexus</option>
+        <option value="dyson_swarm">☀️ Orbital Dyson Pulsar Array</option>
+        <option value="physarum_mycelium">🕸️ Physarum Slime Network</option>
+        <option value="supernova_entropy">💥 Supernova Cosmic Chaos</option>
+      </select>
+    </div>
+
+    <div class="toolbox-divider"></div>
+
+    <div class="time-section">
+      <label class="section-label">TIME DILATION (<span id="time-rate-label">1.0x</span>)</label>
+      <div class="time-slider-row">
+        <input type="range" id="time-slider" min="0" max="3" step="0.1" value="1.0">
+      </div>
+      <div class="time-controls-row">
+        <button id="time-pause-btn" class="hud-action-btn">⏸️ Pause</button>
+        <button id="time-step-btn" class="hud-action-btn">⏯️ Step</button>
+        <button id="respawn-btn" class="hud-action-btn danger">♻️ Reset World</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Floating Specimen & Neural Circuit Inspector -->
+  <aside class="hud-panel right-inspector" id="specimen-panel">
+    <div class="panel-header">
+      <div class="panel-title-wrapper">
+        <span class="specimen-glyph" id="specimen-glyph">🧬</span>
+        <div>
+          <h3 id="specimen-name">SPECIMEN #0000</h3>
+          <span class="specimen-type" id="specimen-taxonomy">HERBIVORE // SYNANTH-A</span>
+        </div>
+      </div>
+      <button id="close-inspector-btn" class="close-btn" title="Close Panel">✕</button>
+    </div>
+
+    <!-- Live Neural Network Visualization Canvas -->
+    <div class="brain-viz-box">
+      <div class="brain-title">LIVE NEURAL CIRCUITRY (CLICK NEURON TO STIMULATE)</div>
+      <canvas id="brain-canvas" width="290" height="170"></canvas>
+      <div class="brain-legend">
+        <span>● Inputs: Food, Danger, Pheromones, Energy, 4D Warp</span>
+        <span>● Outputs: Steer Angle, Throttle, Dash, Secrete</span>
+      </div>
+    </div>
+
+    <!-- Genome Attributes & Vital Telemetry -->
+    <div class="genome-stats-grid">
+      <div class="stat-card">
+        <span class="stat-title">ENERGY</span>
+        <div class="stat-bar-container">
+          <div class="stat-bar-fill" id="energy-bar" style="width: 80%;"></div>
+        </div>
+        <span class="stat-value" id="energy-val">80 / 100</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">LIFESPAN & AGE</span>
+        <span class="stat-value" id="age-val">Tick 124 (Gen 3)</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">MAX SPEED</span>
+        <span class="stat-value" id="speed-val">4.2 px/t</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">SENSORY RADIUS</span>
+        <span class="stat-value" id="sense-val">120 px</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">FIELD OF VIEW</span>
+        <span class="stat-value" id="fov-val">135°</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">METABOLISM</span>
+        <span class="stat-value" id="metabolism-val">0.08 e/t</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">OFFSPRING</span>
+        <span class="stat-value" id="offspring-val">2</span>
+      </div>
+
+      <div class="stat-card">
+        <span class="stat-title">KILL COUNT</span>
+        <span class="stat-value" id="kills-val">0</span>
+      </div>
+    </div>
+
+    <!-- Specimen Action Interventions -->
+    <div class="specimen-actions">
+      <button id="evolve-specimen-btn" class="hud-action-btn" style="border-color: var(--green-neon); color: var(--green-neon);">🧠 Hyper-Evolve Specimen</button>
+      <button id="zap-specimen-btn" class="hud-action-btn mutator">⚡ Mutate Chromosomes</button>
+      <button id="clone-specimen-btn" class="hud-action-btn">🧬 Clone Organism</button>
+      <button id="track-camera-btn" class="hud-action-btn active-state">🎯 Lock Tracking</button>
+    </div>
+  </aside>
+
+  <!-- Floating Cosmic Mini-Map Radar -->
+  <aside class="hud-panel minimap-panel" id="minimap-panel" title="Click or drag on radar to teleport camera">
+    <div class="minimap-header">
+      <span>📡 COSMIC RADAR</span>
+      <span id="zoom-indicator">1.0x</span>
+    </div>
+    <canvas id="minimap-canvas" width="170" height="106"></canvas>
+  </aside>
+
+  <!-- Bottom Cybernetic Command Dock -->
+  <footer class="hud-panel bottom-dock">
+    <!-- Tab Navigation -->
+    <div class="dock-tabs">
+      <button class="dock-tab active" data-tab="telemetry">📈 Biosphere Dynamics</button>
+      <button class="dock-tab" data-tab="hall">🏆 Apex Hall of Fame</button>
+      <button class="dock-tab" data-tab="tesseract">🌀 4D Polytope Engine</button>
+      <button class="dock-tab" data-tab="architect">🧬 Bio-Architect Lab</button>
+      <button class="dock-tab" data-tab="audio">🎵 Synesthetic Synthesizer</button>
+      <button class="dock-tab" data-tab="archives">💾 Universe Vault</button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="dock-content-area">
+      <!-- Tab 1: Biosphere Telemetry Charts -->
+      <div class="dock-pane active" id="pane-telemetry">
+        <div class="telemetry-pane-layout">
+          <div class="chart-container">
+            <div class="chart-header">
+              <span>POPULATION & GENETIC DIVERSITY HISTORY</span>
+              <span class="legend"><b style="color: #00ffcc;">■</b> Herbivores &nbsp; <b style="color: #ff3366;">■</b> Carnivores &nbsp; <b style="color: #ffaa00;">■</b> Scavengers &nbsp; <b style="color: #b026ff;">■</b> Biomass</span>
+            </div>
+            <canvas id="analytics-canvas" width="600" height="90"></canvas>
+          </div>
+          <div class="telemetry-stats-column">
+            <div><b>Total Generations:</b> <span id="stat-max-gen">1</span></div>
+            <div><b>Extinction Risk:</b> <span id="stat-extinction-risk" class="risk-low">LOW (Stable)</span></div>
+            <div><b>Biodiversity Entropy:</b> <span id="stat-diversity">0.82</span></div>
+            <div><b>Active Anomalies:</b> <span id="stat-grav-wells">1</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Apex Hall of Fame Leaderboard -->
+      <div class="dock-pane" id="pane-hall">
+        <div class="hall-of-fame-grid" id="hall-of-fame-grid">
+          <span class="empty-hint">Evaluating biosphere evolutionary fitness...</span>
+        </div>
+      </div>
+
+      <!-- Tab 3: 4D Polytope Controls -->
+      <div class="dock-pane" id="pane-tesseract">
+        <div class="tesseract-controls-grid">
+          <div class="slider-box">
+            <label>4D Polytope Geometry</label>
+            <select id="manifold-geom-select" class="hud-select">
+              <option value="tesseract">🌀 4D Tesseract (Hypercube)</option>
+              <option value="clifford_torus">🍩 4D Clifford Torus (Hopf Fibration)</option>
+              <option value="cell24">💎 4D 24-Cell (Icositetrachoron)</option>
+              <option value="cell16">🔷 4D 16-Cell (Hyper-Octahedron)</option>
+              <option value="klein_bottle">♾️ 4D Klein Bottle Immersion</option>
+              <option value="simplex5">🔺 4D 5-Cell (Pentachoron)</option>
+            </select>
+          </div>
+          <div class="slider-box">
+            <label>4D Rotation Plane XW: <span id="rot-xw-val">0.012</span></label>
+            <input type="range" id="rot-xw" min="-0.05" max="0.05" step="0.001" value="0.012">
+          </div>
+          <div class="slider-box">
+            <label>4D Rotation Plane YW: <span id="rot-yw-val">0.008</span></label>
+            <input type="range" id="rot-yw" min="-0.05" max="0.05" step="0.001" value="0.008">
+          </div>
+          <div class="slider-box">
+            <label>4D Rotation Plane ZW: <span id="rot-zw-val">0.015</span></label>
+            <input type="range" id="rot-zw" min="-0.05" max="0.05" step="0.001" value="0.015">
+          </div>
+          <div class="slider-box">
+            <label>Spacetime Distortion Force: <span id="warp-val">1.0x</span></label>
+            <input type="range" id="warp-force" min="0" max="3" step="0.1" value="1.0">
+          </div>
+          <div class="toggle-box">
+            <label><input type="checkbox" id="manifold-mesh-toggle" checked> Render 4D Wireframe</label>
+            <label><input type="checkbox" id="manifold-grav-toggle" checked> Enable Spacetime Gravity Bend</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Synthetic Bio-Architect Lab -->
+      <div class="dock-pane" id="pane-architect">
+        <div class="architect-layout">
+          <div class="architect-form">
+            <div class="architect-row">
+              <div class="slider-box">
+                <label>Organism Kingdom</label>
+                <select id="arch-kingdom" class="hud-select">
+                  <option value="herbivore">🌿 Herbivore (Cyan Plankton Swimmer)</option>
+                  <option value="carnivore">🦞 Apex Carnivore (Crimson Hunter)</option>
+                  <option value="scavenger">✨ Scavenger (Amber Detritivore)</option>
+                </select>
+              </div>
+              <div class="slider-box">
+                <label>Body Size: <span id="arch-size-val">5.5</span></label>
+                <input type="range" id="arch-size" min="3.5" max="11.0" step="0.5" value="5.5">
+              </div>
+              <div class="slider-box">
+                <label>Speed Limit: <span id="arch-speed-val">3.5</span></label>
+                <input type="range" id="arch-speed" min="1.8" max="6.0" step="0.2" value="3.5">
+              </div>
+            </div>
+            <div class="architect-row">
+              <div class="slider-box">
+                <label>Sensory Radius: <span id="arch-sense-val">150 px</span></label>
+                <input type="range" id="arch-sense" min="80" max="280" step="10" value="150">
+              </div>
+              <div class="slider-box">
+                <label>Color Hue: <span id="arch-hue-val">180°</span></label>
+                <input type="range" id="arch-hue" min="0" max="360" step="5" value="180">
+              </div>
+              <div class="slider-box" style="display: flex; align-items: flex-end;">
+                <button id="inject-specimen-btn" class="hud-action-btn" style="width: 100%; height: 32px; background: var(--cyan-neon); color: #000;">
+                  ⚡ Inject Specimen Into Biosphere
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="architect-preview">
+            <div id="arch-color-preview" class="color-swatch"></div>
+            <span class="preview-caption">Bioluminescence Wavelength</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 4: Synesthetic Web Audio Synthesizer -->
+      <div class="dock-pane" id="pane-audio">
+        <div class="audio-controls-layout">
+          <div class="audio-viz-box">
+            <canvas id="audio-scope-canvas" width="240" height="85"></canvas>
+            <div class="viz-mode-row">
+              <span class="scope-caption">SPECTRAL ANALYZER</span>
+              <button id="viz-mode-btn" class="hud-btn-subtle" style="font-size:0.6rem; padding:1px 6px;">MODE: WAVE</button>
+            </div>
+          </div>
+          <div class="audio-params-grid">
+            <div class="slider-box">
+              <label>Master Synthesizer Gain</label>
+              <input type="range" id="audio-master-gain" min="0" max="1" step="0.05" value="0.5">
+            </div>
+            <div class="slider-box">
+              <label>Musical Harmonic Scale</label>
+              <select id="audio-scale-select" class="hud-select">
+                <option value="lydian">🌌 Celestial Lydian (Ethereal Space)</option>
+                <option value="dorian">⚡ Cyber Dorian (Sci-Fi Pulse)</option>
+                <option value="pentatonic">🌱 Primordial Pentatonic (Organic)</option>
+                <option value="aeolian">🌑 Deep Void Aeolian (Mysterious)</option>
+              </select>
+            </div>
+            <div class="audio-toggle-row">
+              <label><input type="checkbox" id="audio-drone-toggle" checked> Generative Ambient Chords</label>
+              <label><input type="checkbox" id="audio-events-toggle" checked> Biological Event Chimes (Hunting/Birth)</label>
+              <label><input type="checkbox" id="audio-theremin-toggle" checked> Cursor Singularity Theremin</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 5: Save & Universe Vault -->
+      <div class="dock-pane" id="pane-archives">
+        <div class="archives-layout">
+          <div class="archive-save-col">
+            <label>Universe Designation Name</label>
+            <div class="input-btn-group">
+              <input type="text" id="universe-name-input" placeholder="e.g. Andromeda_Chronosphere" class="hud-input">
+              <button id="save-universe-btn" class="hud-action-btn">💾 Save Snapshot</button>
+            </div>
+            <div class="export-import-row">
+              <button id="export-json-btn" class="hud-btn-subtle">📤 Export JSON File</button>
+              <label class="hud-btn-subtle file-label">
+                📥 Import JSON File
+                <input type="file" id="import-json-input" accept=".json" style="display:none;">
+              </label>
+            </div>
+          </div>
+          <div class="archive-list-col">
+            <span class="col-title">SAVED TIMELINES ON SERVER</span>
+            <div id="saved-universes-list" class="saved-list">
+              <span class="empty-hint">Scanning archives...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Holographic Notification Toast -->
+  <div id="toast" class="hud-toast"></div>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div id="shortcuts-modal" class="hud-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title">⚡ COSMIC COMMAND KEYBOARD SHORTCUTS</span>
+        <button id="close-shortcuts-btn" class="close-btn">✕</button>
+      </div>
+      <div class="shortcuts-grid">
+        <div class="shortcut-item"><kbd>Space</kbd> <span>Pause / Resume Time Flow</span></div>
+        <div class="shortcut-item"><kbd>1</kbd> <span>Select Inspect / Track Tool</span></div>
+        <div class="shortcut-item"><kbd>2</kbd> <span>Spawn Singularity (Black Hole)</span></div>
+        <div class="shortcut-item"><kbd>3</kbd> <span>Spawn White Hole Repulsor</span></div>
+        <div class="shortcut-item"><kbd>4</kbd> <span>Scatter Spore Bloom (Food)</span></div>
+        <div class="shortcut-item"><kbd>5</kbd> <span>Fire Cosmic Mutagen Ray</span></div>
+        <div class="shortcut-item"><kbd>6</kbd> <span>Detonate Stellar Supernova</span></div>
+        <div class="shortcut-item"><kbd>7</kbd> <span>Drop Quantum Stasis Bubble</span></div>
+        <div class="shortcut-item"><kbd>8</kbd> <span>Fire Chain Mutagen Lightning</span></div>
+        <div class="shortcut-item"><kbd>9</kbd> <span>Open 4D Spatial Wormhole Rift</span></div>
+        <div class="shortcut-item"><kbd>0</kbd> <span>Deploy Orbital Dyson Pulsar Beacon</span></div>
+        <div class="shortcut-item"><kbd>F</kbd> <span>Lock Camera onto #1 Apex Specimen</span></div>
+        <div class="shortcut-item"><kbd>H</kbd> <span>Toggle Holographic Cinematic Mode</span></div>
+        <div class="shortcut-item"><kbd>C</kbd> <span>Center Camera Navigation</span></div>
+        <div class="shortcut-item"><kbd>Scroll Wheel</kbd> <span>Zoom In / Out (0.3x to 4.5x)</span></div>
+        <div class="shortcut-item"><kbd>Middle / Shift Drag</kbd> <span>Pan Infinite Biosphere Camera</span></div>
+        <div class="shortcut-item"><kbd>Right Click</kbd> <span>Neutralize / Remove Celestial Anomaly</span></div>
+        <div class="shortcut-item"><kbd>R</kbd> <span>Reboot Universe Genesis</span></div>
+        <div class="shortcut-item"><kbd>+</kbd> / <kbd>-</kbd> <span>Accelerate / Decelerate Time Flow</span></div>
+        <div class="shortcut-item"><kbd>Esc</kbd> <span>Close Inspector / Cancel Rift Construction</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main ES Module Bootstrapper -->
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
